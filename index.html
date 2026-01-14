@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Namiya VIP Pro Predictor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #050505; color: white; font-family: sans-serif; overflow-x: hidden; }
+        .gold-gradient { background: linear-gradient(90deg, #FFD700, #B8860B); }
+        .card-bg { background-color: #121212; }
+        .premium-border { border: 1px solid #FFD700; }
+        @keyframes splashScale { from { transform: scale(0.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .animate-splash { animation: splashScale 1.5s ease-out forwards; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <div id="splash" class="flex flex-col items-center justify-center h-screen bg-black">
+        <div class="animate-splash text-center">
+            <h1 class="text-5xl font-black tracking-tighter">NAMIYA</h1>
+            <p class="text-xs tracking-[0.3em] text-[#FFD700] mt-2">VIP PRO PREDICTOR</p>
+        </div>
+    </div>
+
+    <div id="auth" class="hidden p-8 flex flex-col justify-center h-screen">
+        <h2 class="text-3xl font-bold text-center mb-10">MEMBER ACCESS</h2>
+        <input id="userName" type="text" placeholder="Enter Your Name" class="w-full bg-transparent border border-gray-600 p-4 rounded-lg focus:border-[#FFD700] outline-none mb-6 text-white">
+        <button onclick="handleAuth()" class="w-full bg-red-600 h-14 rounded-xl font-bold hover:bg-red-700 transition">GET APPROVAL VIA WHATSAPP</button>
+    </div>
+
+    <div id="dashboard" class="hidden p-6">
+        <div class="flex justify-between items-start mt-8 mb-8">
+            <h2 class="text-2xl font-black leading-tight">NAMIYA<br>VIP TERMINAL</h2>
+            <div class="text-[#FFD700] text-4xl">👤</div>
+        </div>
+
+        <div class="gold-gradient p-[1px] rounded-[25px] mb-8">
+            <div class="bg-[#0A0A0A] p-6 rounded-[24px] h-48 flex flex-col justify-between">
+                <div class="flex justify-between items-center text-[10px]">
+                    <span class="text-[#FFD700]">BOC PREMIUM SAVINGS</span>
+                    <span>📡</span>
+                </div>
+                <div class="text-2xl font-bold tracking-[0.2em]">8637 5652 0000</div>
+                <div class="text-sm text-gray-400">K.T. IRESH CHANDANA</div>
+            </div>
+        </div>
+
+        <div class="space-y-4 mb-8">
+            <div class="card-bg p-5 rounded-xl flex justify-between items-center">
+                <div><p class="font-bold">WEEKLY PRO</p><p class="text-xs text-gray-500">Daily 10 Signals</p></div>
+                <div class="text-[#FFD700] font-black text-lg">RS. 500</div>
+            </div>
+            <div class="card-bg p-5 rounded-xl flex justify-between items-center">
+                <div><p class="font-bold">MONTHLY PRO</p><p class="text-xs text-gray-500">Unlimited Access</p></div>
+                <div class="text-[#FFD700] font-black text-lg">RS. 1300</div>
+            </div>
+        </div>
+
+        <button onclick="showEngine()" class="w-full bg-red-600 h-16 rounded-2xl font-black text-lg shadow-lg shadow-red-900/50">LAUNCH PREDICTOR ENGINE</button>
+    </div>
+
+    <div id="engine" class="hidden p-8 flex flex-col items-center justify-center h-screen">
+        <p class="text-gray-500 text-[10px] tracking-widest mb-4">NAMIYA VIP AI ENGINE</p>
+        <p id="status" class="font-bold text-green-500 mb-12">ENGINE READY</p>
+        
+        <div class="w-64 h-64 border-2 border-dashed border-red-600 rounded-full flex flex-col items-center justify-center mb-12">
+            <h3 id="result" class="text-6xl font-black">0.00</h3>
+            <p id="timer" class="text-red-600 font-bold mt-2 hidden">CRASH IN 45S</p>
+        </div>
+
+        <button id="genBtn" onclick="generateSignal()" class="w-full bg-white text-black h-14 rounded-xl font-bold">GENERATE HIGH ODD</button>
+    </div>
+
+    <script>
+        function showScreen(id) {
+            document.querySelectorAll('body > div').forEach(div => div.classList.add('hidden'));
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        // Splash to Auth
+        setTimeout(() => showScreen('auth'), 3000);
+
+        function handleAuth() {
+            let name = document.getElementById('userName').value;
+            if(!name) { alert("Please enter name"); return; }
+            let msg = encodeURIComponent("REGISTRATION APPROVE: " + name);
+            window.open(`https://api.whatsapp.com/send?phone=94750320170&text=${msg}`);
+            showScreen('dashboard');
+        }
+
+        function showEngine() { showScreen('engine'); }
+
+        async function generateSignal() {
+            let status = document.getElementById('status');
+            let result = document.getElementById('result');
+            let timer = document.getElementById('timer');
+            let btn = document.getElementById('genBtn');
+
+            btn.disabled = true;
+            status.innerText = "CONNECTING...";
+            status.className = "font-bold text-red-500";
+            
+            await new Promise(r => setTimeout(r, 2000));
+            status.innerText = "BYPASSING SECURITY...";
+            
+            await new Promise(r => setTimeout(r, 2000));
+            status.innerText = "SIGNAL DECODED!";
+            
+            let odd = (1.5 + Math.random() * 18.5).toFixed(2);
+            result.innerText = odd;
+            
+            timer.classList.remove('hidden');
+            let timeLeft = 45;
+            
+            let countdown = setInterval(() => {
+                timeLeft--;
+                timer.innerText = `CRASH IN ${timeLeft}S`;
+                if(timeLeft <= 0) {
+                    clearInterval(countdown);
+                    timer.classList.add('hidden');
+                    status.innerText = "ENGINE READY";
+                    status.className = "font-bold text-green-500";
+                    result.innerText = "0.00";
+                    btn.disabled = false;
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
